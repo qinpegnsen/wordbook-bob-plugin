@@ -45,6 +45,7 @@ function translate(query, completion) {
         completion({ 'result': buildResult("中文单词无需添加单词本") });
         return;
     }
+    $log.info(text)
     if (text.split(' ').length > 3) {
         completion({ 'result': buildResult("长度不能大于3") });
         return;
