@@ -42,14 +42,18 @@ function translate(query, completion) {
     EUDIC_WORD_BOOK_ID = $option.wordbookId;
 
     if (fromLanguage != 'en') {
-        completion({'result': buildResult("中文单词无需添加单词本")});
+        completion({ 'result': buildResult("中文单词无需添加单词本") });
+        return;
+    }
+    if (text.split(' ').length > 3) {
+        completion({ 'result': buildResult("长度不能大于3") });
         return;
     }
 
     if (authorization) {
         addWord(selectDict, authorization, text, completion);
     } else {
-        completion({'error': buildError('「认证信息」缺失')});
+        completion({ 'error': buildError('「认证信息」缺失') });
     }
 }
 
@@ -85,9 +89,9 @@ function addWordEudic(token, word, completion) {
             var response = res.response;
             var statusCode = response.statusCode;
             if (statusCode === 201) {
-                completion({'result': buildResult("添加单词本成功")});
+                completion({ 'result': buildResult("添加单词本成功") });
             } else {
-                completion({'error': buildError('token 已经过期，请重新获取。')});
+                completion({ 'error': buildError('token 已经过期，请重新获取。') });
                 $log.info('addWord 接口返回值 data : ' + JSON.stringify(data));
             }
         }
@@ -117,9 +121,9 @@ function addWordYoudao(cookie, word, completion) {
             var data = res.data;
             var message = data.message;
             if (!message === 'nouser') {
-                completion({'result': buildResult("添加单词本成功")});
+                completion({ 'result': buildResult("添加单词本成功") });
             } else {
-                completion({'error': buildError('cookie 已经过期，请重新获取。')});
+                completion({ 'error': buildError('cookie 已经过期，请重新获取。') });
                 $log.info('addWord 接口返回值 data : ' + JSON.stringify(data));
             }
         }
@@ -138,10 +142,10 @@ function queryEudicWordbookIds(token, completion) {
             var statusCode = res.response.statusCode;
             if (statusCode === 200) {
                 var data = res.data.data;
-                completion({'result': buildResult("单词本列表：\r\n" + JSON.stringify(data, null, 4))});
+                completion({ 'result': buildResult("单词本列表：\r\n" + JSON.stringify(data, null, 4)) });
                 $log.info('接口返回值 data : ' + JSON.stringify(data));
             } else {
-                completion({'error': buildError('token 已经过期，请重新获取。')});
+                completion({ 'error': buildError('token 已经过期，请重新获取。') });
             }
         }
     });
