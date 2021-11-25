@@ -41,13 +41,17 @@ function translate(query, completion) {
     var authorization = $option.authorization;
     EUDIC_WORD_BOOK_ID = $option.wordbookId;
 
-    if (fromLanguage != 'en') {
-        completion({ 'result': buildResult("中文单词无需添加单词本") });
+    // if (fromLanguage != 'en') {
+    //     completion({ 'result': buildResult("中文单词无需添加单词本") });
+    //     return;
+    // }
+    if (/^[\u4e00-\u9FFF]+$/.test(text)) {
+        completion({ 'result': buildResult("全部中文单词无需添加单词本") });
         return;
     }
-    $log.info(text)
-    if (text.split(' ').length > 3) {
-        completion({ 'result': buildResult("长度不能大于3") });
+    // $log.info(text)
+    if (text.split(' ').length > 7) {
+        completion({ 'result': buildResult("长度不能大于7") });
         return;
     }
 
