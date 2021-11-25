@@ -54,7 +54,7 @@ function translate(query, completion) {
         completion({ 'result': buildResult("长度不能大于7") });
         return;
     }
-
+                
     if (authorization) {
         addWord(selectDict, authorization, text, completion);
     } else {
